@@ -1,17 +1,13 @@
-import React from "react";
-import Client from "./Client";
-import Visiteur from "./Visiteur";
+import ListLivre from "./components/ListLivre";
 
 function App() {
-  // variable simple
-  const connecte = true; // essaie b false bach tchouf l'autre cas
-
-  // affichage conditionnel
-  if (connecte) {
-    return <Client />;
-  } else {
-    return <Visiteur />;
-  }
+  return (
+    <div>
+      <h1 style={{ textAlign: "center" }}>Liste des Livres</h1>
+      <ListLivre />
+    </div>
+  );
 }
 
 export default App;
+
