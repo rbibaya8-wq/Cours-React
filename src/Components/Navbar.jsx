@@ -1,7 +1,12 @@
-function Navbar({ cartCount, onOpenCart }) {
+function Navbar({ cartCount, onOpenCart,search,setSearch }) {
+
+
   return (
     <nav className="navbar">
-      <div className="logo">HomeDecor</div>
+  <div className="logo modern-logo">
+    <i className="fas fa-home"></i>
+    <span>HomeDecor</span>
+  </div>
 
       <ul className="nav-links">
         <li><a href="#">Home</a></li>
@@ -11,16 +16,21 @@ function Navbar({ cartCount, onOpenCart }) {
       </ul>
 
       <div className="nav-actions">
-        <input 
-          type="text" 
-          placeholder="Search..." 
-          className="search-input" 
+        <div className="search-box">
+        <input
+          type="text"
+          placeholder="Search..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
         />
+        <i className="fas fa-search"></i>
 
-        <button className="cart-btn" onClick={onOpenCart}>
-          🛒 Cart ({cartCount})
-        </button>
       </div>
+      </div>
+        <button className="cart-btn" onClick={onOpenCart}>
+        <i className="fas fa-shopping-cart"></i>Cart ({cartCount})
+        </button>
+
     </nav>
   );
 }
