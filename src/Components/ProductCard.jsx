@@ -6,13 +6,14 @@ function ProductCard({ product, onAdd }) {
       <h3 className="card-title">{product.title}</h3>
       <p className="card-desc">{product.description}</p>
       <p className="price">${product.price}</p>
+
       <button onClick={() => onAdd(product)}>
-    <span class="circle1"></span>
-    <span class="circle2"></span>
-    <span class="circle3"></span>
-    <span class="circle4"></span>
-    <span class="circle5"></span>
-    <span class="text">Add to cart</span>
+          <span class="circle1"></span>
+          <span class="circle2"></span>
+          <span class="circle3"></span>
+          <span class="circle4"></span>
+          <span class="circle5"></span>
+          <span class="text">Add to cart</span>
     </button>
     </div>
   );

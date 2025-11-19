@@ -1,19 +1,28 @@
-function Navbar({ cartCount, onOpenCart,search,setSearch }) {
-
+function Navbar({ cartCount, onOpenCart,search,setSearch,Filtrage,setFiltrage,Theme,toggletheme }) {
 
   return (
     <nav className="navbar">
   <div className="logo modern-logo">
-    <i className="fas fa-home"></i>
+    <img src="/images/logo3.jpeg" alt="Logo" />
     <span>HomeDecor</span>
   </div>
 
-      <ul className="nav-links">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Shop</a></li>
-        <li><a href="#">Collections</a></li>
-        <li><a href="#">About</a></li>
-      </ul>
+      <button onClick={toggletheme} className="theme-btn">
+        {Theme==="light"?"Dark mode" :"light Mode"}
+      </button>
+      <div className="Select-Box">
+            <select value={Filtrage}
+                onChange={(e) => setFiltrage(e.target.value)}>
+                <option value="All">All</option>
+                <option value="Lamps">Lamps</option>
+                <option value="Mirrors">Mirrors</option>
+                <option value="Chairs">Chairs</option>
+                <option value="Rugs">Rugs</option>
+                <option value="Vases">Vases</option>
+                <option value="Woodens">Woodens</option>
+                <option value="bookShelfs">bookShelfs</option>
+            </select>
+      </div>
 
       <div className="nav-actions">
         <div className="search-box">
