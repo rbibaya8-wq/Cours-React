@@ -1,4 +1,5 @@
-function Navbar({ cartCount, onOpenCart,search,setSearch,Filtrage,setFiltrage,Theme,toggletheme }) {
+function Navbar({ cartCount, onOpenCart,search,setSearch,Filtrage,setFiltrage,toggletheme,
+ }) {
 
   return (
     <nav className="navbar">
@@ -7,9 +8,10 @@ function Navbar({ cartCount, onOpenCart,search,setSearch,Filtrage,setFiltrage,Th
     <span>HomeDecor</span>
   </div>
 
-      <button onClick={toggletheme} className="theme-btn">
-        {Theme==="light"?"Dark mode" :"light Mode"}
-      </button>
+    <input type="checkbox" id="checkboxInput" onClick={toggletheme}/>
+    <label class="toggleSwitch" for="checkboxInput">
+    </label>
+
       <div className="Select-Box">
             <select value={Filtrage}
                 onChange={(e) => setFiltrage(e.target.value)}>
@@ -23,7 +25,8 @@ function Navbar({ cartCount, onOpenCart,search,setSearch,Filtrage,setFiltrage,Th
                 <option value="bookShelfs">bookShelfs</option>
             </select>
       </div>
-
+      
+    
       <div className="nav-actions">
         <div className="search-box">
         <input
@@ -39,7 +42,6 @@ function Navbar({ cartCount, onOpenCart,search,setSearch,Filtrage,setFiltrage,Th
         <button className="cart-btn" onClick={onOpenCart}>
         <i className="fas fa-shopping-cart"></i>Cart ({cartCount})
         </button>
-
     </nav>
   );
 }

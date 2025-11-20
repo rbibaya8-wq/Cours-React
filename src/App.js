@@ -1,9 +1,52 @@
+/*import { useState } from "react";
+import MoodDisplay from "./MoodBoard/MoodDisplay";
+import MoodSelector from "./MoodBoard/ModeSelector";
+import MoodHistory from "./MoodBoard/MoodHistory";
+function App(){
+  const moods = [ 
+{ label: "😊 Heureux", value: "Heureux", color: "#ffeb3b" }, 
+{ label: "😴 Fatigué", value: "Fatigué", color: "#81d4fa" }, 
+{ label: "😡 Stressé", value: "Stressé", color: "#ef9a9a" }, 
+{ label: "😎 Motivé", value: "Motivé", color: "#a5d6a7" }, 
+]; 
+
+const [selectorMode,setSelectorMood]=useState()
+const [history,setHistory]=useState([])
+
+const SelectMood=(mood)=>{
+    setSelectorMood(mood);
+    setHistory([...history,mood])
+}
+const reset=()=>{
+  setSelectorMood(null);
+}
+const removeHistory=()=>{
+  setHistory([]);
+}
+
+ return (
+    <div style={{ padding: "20px", textAlign: "center" }}>
+      <h1>MoodBoard du Jour</h1>
+
+      <MoodSelector moods={moods} onSelectMood={SelectMood} />
+
+      <MoodDisplay mood={selectorMode} />
+      <button onClick={reset} className="reset-btn" >Reinitialiser</button>
+      <button onClick={removeHistory} className="clear-btn"> Effacer L'Historique</button>
+
+      <MoodHistory history={history} />
+    </div>
+  );
+}
+
+export default App;*/
 import { useState } from "react";
 import Navbar from "./Components/Navbar";
 import Home from "./Pages/Home";
 import "./App.css";
 import CartModel from "./Components/CartModel";
 import CheckoutForm from "./Components/CheckoutForm";
+import { products } from "./data/products";
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -12,10 +55,28 @@ function App() {
   const [Filtrage,setFiltrage]=useState("All");
   const [ShowForm,SetShowForm]=useState(false);
   const [Theme,setTheme]=useState("light");
+  const [wishlist, setWishlist] = useState([]);
 
   const toggletheme=()=>{
     setTheme((prev)=>(prev==="light"?"dark":"light"))
   }
+  {/*const toggleWishlist=(product)=>{
+    const exsits=wishlist.find((item)=>item.id===product.id);
+  
+  if (exsits){
+    setWishlist(wishlist.filter((item)=>item.id!==product.id))
+  }else{
+    setWishlist([...wishlist,product])
+  }
+}*/ }
+  const toggleWishlist = (product) => {
+  setWishlist(prev => {
+    const exists = prev.find(item => item.id === product.id);
+    return exists
+      ? prev.filter(item => item.id !== product.id) // remove
+      : [...prev, product]; // add
+  });
+};
 
   return (
     <div className={`app ${Theme}`}>
@@ -41,11 +102,15 @@ function App() {
         <CheckoutForm cart={cart} SetShowForm={SetShowForm} total={cart.reduce((acc, item) => acc + item.price * item.qty, 0)}/>
       )}
       {!ShowForm &&(
-        <Home cart={cart} setCart={setCart} search={search} Filtrage={Filtrage}/>
+        <Home cart={cart} setCart={setCart} search={search} Filtrage={Filtrage} />
       )}
+      
+    
+
     </div> 
       
   );
 }
 
 export default App;
+
