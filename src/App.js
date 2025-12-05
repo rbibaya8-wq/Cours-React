@@ -1,46 +1,4 @@
 /*import { useState } from "react";
-import MoodDisplay from "./MoodBoard/MoodDisplay";
-import MoodSelector from "./MoodBoard/ModeSelector";
-import MoodHistory from "./MoodBoard/MoodHistory";
-function App(){
-  const moods = [ 
-{ label: "😊 Heureux", value: "Heureux", color: "#ffeb3b" }, 
-{ label: "😴 Fatigué", value: "Fatigué", color: "#81d4fa" }, 
-{ label: "😡 Stressé", value: "Stressé", color: "#ef9a9a" }, 
-{ label: "😎 Motivé", value: "Motivé", color: "#a5d6a7" }, 
-]; 
-
-const [selectorMode,setSelectorMood]=useState()
-const [history,setHistory]=useState([])
-
-const SelectMood=(mood)=>{
-    setSelectorMood(mood);
-    setHistory([...history,mood])
-}
-const reset=()=>{
-  setSelectorMood(null);
-}
-const removeHistory=()=>{
-  setHistory([]);
-}
-
- return (
-    <div style={{ padding: "20px", textAlign: "center" }}>
-      <h1>MoodBoard du Jour</h1>
-
-      <MoodSelector moods={moods} onSelectMood={SelectMood} />
-
-      <MoodDisplay mood={selectorMode} />
-      <button onClick={reset} className="reset-btn" >Reinitialiser</button>
-      <button onClick={removeHistory} className="clear-btn"> Effacer L'Historique</button>
-
-      <MoodHistory history={history} />
-    </div>
-  );
-}
-
-export default App;*/
-import { useState } from "react";
 import Navbar from "./Components/Navbar";
 import Home from "./Pages/Home";
 import "./App.css";
@@ -68,7 +26,7 @@ function App() {
   }else{
     setWishlist([...wishlist,product])
   }
-}*/ }
+} 
   const toggleWishlist = (product) => {
   setWishlist(prev => {
     const exists = prev.find(item => item.id === product.id);
@@ -104,8 +62,6 @@ function App() {
       {!ShowForm &&(
         <Home cart={cart} setCart={setCart} search={search} Filtrage={Filtrage} />
       )}
-      
-    
 
     </div> 
       
@@ -113,4 +69,64 @@ function App() {
 }
 
 export default App;
+*/
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import RecipeList from "./Composant/RecipeList";
+import FavorisList from "./Composant/FavorisList";
+import Navbar from "./Composant/Navbar";
+import "./App.css";
+import CreateRecipe from "./Composant/CreateRecipe";
+function App() {
+  const [recipes, setRecipes] = useState([]);
+  const [favoris, setFavoris] = useState([]);
+
+  const addOrRemoveFavoris = (recipe) => {
+    if (favoris.some((f) => f.idMeal === recipe.idMeal)) {
+      setFavoris(favoris.filter((f) => f.idMeal !== recipe.idMeal));
+    } else {
+      setFavoris([...favoris, recipe]);
+    }
+  };
+
+  return (
+    <Router>
+      <Navbar />
+
+      <Routes>
+        <Route
+          path="/recipes"
+          element={
+            <RecipeList
+              recipes={recipes}
+              setRecipes={setRecipes}
+              favoris={favoris}
+              toggleFavori={addOrRemoveFavoris}
+            />
+          }
+        />
+
+        <Route
+          path="/favoris"
+          element={
+            <FavorisList
+              favoris={favoris}
+              toggleFavori={addOrRemoveFavoris}
+            />
+          }
+        />
+
+        <Route
+          path="/create"
+          element={
+            <CreateRecipe setRecipes={setRecipes} />
+          }
+        />
+      </Routes>
+    </Router>
+    
+  );
+}
+
+export default App;
