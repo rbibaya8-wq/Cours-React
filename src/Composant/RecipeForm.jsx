@@ -1,40 +1,29 @@
 import React, { useState } from "react";
 
-function RecipeForm({ onSubmit, editingRecipe, onClose }) {
-  const [name, setName] = useState(editingRecipe ? editingRecipe.name : "");
-  const [category, setCategory] = useState(
-    editingRecipe ? editingRecipe.category : "Entree"
-  );
-  const [ingredients, setIngredients] = useState(
-    editingRecipe ? editingRecipe.ingredients : [""]
-  );
-  const [difficulty, setDifficulty] = useState(
-    editingRecipe ? editingRecipe.difficulty : 1
-  );
-  const [description, setDescription] = useState(
-    editingRecipe ? editingRecipe.description : ""
-  );
-  const [image, setImage] = useState(
-    editingRecipe ? editingRecipe.image : ""
-  );
+function RecipeForm({ onSubmit, onClose }) {
+  const [name, setName] = useState("");
+  const [category, setCategory] = useState("Plat");
+  const [ingredients, setIngredients] = useState([""]);
+  const [difficulty, setDifficulty] = useState(1);
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     onSubmit({
-      id: editingRecipe ? editingRecipe.id : Date.now(),
-      name,
-      category,
-      ingredients,
-      difficulty,
-      description,
-      image,
+      idMeal: Date.now(),
+      strMeal: name,
+      strCategory: category,
+      strInstructions: description,
+      customIngredients: ingredients,
+      strMealThumb: image, 
     });
   };
 
   return (
     <form onSubmit={handleSubmit} className="create-form">
-      <h2>{editingRecipe ? "Modifier la recette" : "Nouvelle recette"}</h2>
+      <h2>Nouvelle recette</h2>
 
       <input
         value={name}
@@ -51,6 +40,7 @@ function RecipeForm({ onSubmit, editingRecipe, onClose }) {
       </select>
 
       <h4>Ingrédients :</h4>
+
       {ingredients.map((ing, index) => (
         <div key={index} className="row">
           <input
@@ -61,6 +51,7 @@ function RecipeForm({ onSubmit, editingRecipe, onClose }) {
               setIngredients(arr);
             }}
           />
+
           <button
             type="button"
             className="btn-remove-ing"
@@ -92,11 +83,18 @@ function RecipeForm({ onSubmit, editingRecipe, onClose }) {
       <textarea
         value={description}
         onChange={(e) => setDescription(e.target.value)}
+        placeholder="Description..."
       />
 
       <input
         type="file"
-        onChange={(e) => setImage(e.target.value)}
+        accept="image/*"
+        onChange={(e) => {
+          const file = e.target.files[0];
+          if (file) {
+            setImage(URL.createObjectURL(file));
+          }
+        }}
       />
 
       <button type="submit" className="btn-save">

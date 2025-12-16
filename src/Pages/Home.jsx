@@ -3,8 +3,8 @@ import ProductCard from "../Components/ProductCard";
 import { useState } from "react";
 import Pagination from "../Components/Pagination";
 import Sorting from "../Components/Sorting";
-
-function Home({ cart, setCart ,search,Filtrage}) {
+    
+function Home({ cart, setCart ,search,Filtrage,products,OnFavoris }) {
   //declare state de pagination
   const [Page, setPage] = useState(1);
   const productsPerPage = 6;
@@ -41,16 +41,14 @@ function Home({ cart, setCart ,search,Filtrage}) {
   //affichage de contenu
   return (
     <>
-    <div className="sorting-container">
-        <label htmlFor="">Sort Products by:</label>
-        <Sorting sort={sort} setSort={setSort}/>
-    </div>
+    
     <div className="products-grid">
       {paginated.map((item) => (
         <ProductCard
           key={item.id}
           product={item}
           onAdd={addToCart}
+          OnFavoris={OnFavoris}
         />
       ))}
 
@@ -67,3 +65,9 @@ function Home({ cart, setCart ,search,Filtrage}) {
 }
 
 export default Home;
+
+
+/*<div className="sorting-container">
+        <label htmlFor="">Sort Products by:</label>
+        <Sorting sort={sort} setSort={setSort}/>
+    </div>*/

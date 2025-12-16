@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+
 import SearchBar from "./SearchBar";
 import RecipeItem from "./RecipeItem";
 import RecipeDetails from "./RecipeDetails";
@@ -13,35 +15,47 @@ function RecipeList({ recipes, setRecipes, favoris, toggleFavori }) {
     setLoading(true);
     setError("");
 
-    const res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${term}`);
-    const data = await res.json();
+    try {
+      const res = await axios.get(
+        `https://www.themealdb.com/api/json/v1/1/search.php?s=${term}`
+      );
 
-    setLoading(false);
+      setLoading(false);
 
-    if (!data.meals) {
-      setRecipes([]);
-      setError("Aucune recette trouvee pour cette recherche");
-      return;
+      const data = res.data; 
+
+      if (!data.meals) {
+        setRecipes([]);
+        setError("Aucune recette trouvée pour cette recherche");
+        return;
+      }
+
+      setRecipes(data.meals);
+
+    } catch (err) {
+      setLoading(false);
+      setError("Erreur lors du chargement des données");
+      console.error(err);
     }
-
-    setRecipes(data.meals);
   };
 
   useEffect(() => {
+  if (recipes.length === 0) {
     fetchRecipes("potato");
-  }, []);
+  }
+}, [recipes]);
 
   const handleSearch = () => {
     if (search.length < 3) {
-      setError("La zone de recherche doit contenir au moins 3 caracteres");
+      setError("La zone de recherche doit contenir au moins 3 caractères");
       return;
     }
+
     fetchRecipes(search);
   };
 
   return (
     <div className="list">
-
       <SearchBar
         search={search}
         setSearch={setSearch}

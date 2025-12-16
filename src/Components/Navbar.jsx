@@ -1,13 +1,15 @@
+import { Link } from "react-router-dom";
+
 function Navbar({ cartCount, onOpenCart,search,setSearch,Filtrage,setFiltrage,toggletheme,
  }) {
 
   return (
     <nav className="navbar">
-  <div className="logo modern-logo">
-    <img src="/images/logo3.jpeg" alt="Logo" />
-    <span>HomeDecor</span>
+      <div className="logo modern-logo">
+      <img src="/images/logo3.jpeg" alt="Logo" />
+      <span>HomeDecor</span>
   </div>
-
+    <Link to="/favoris">Mes Favoris</Link>
     <input type="checkbox" id="checkboxInput" onClick={toggletheme}/>
     <label class="toggleSwitch" for="checkboxInput">
     </label>
@@ -36,7 +38,7 @@ function Navbar({ cartCount, onOpenCart,search,setSearch,Filtrage,setFiltrage,to
           onChange={(e) => setSearch(e.target.value)}
         />
         <i className="fas fa-search"></i>
-
+        
       </div>
       </div>
         <button className="cart-btn" onClick={onOpenCart}>

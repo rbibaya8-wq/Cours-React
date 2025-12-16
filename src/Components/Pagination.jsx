@@ -17,6 +17,7 @@ function Pagination({Page,setPage,totalPages}){
             <span className="page-count">Page{Page} / {totalPages}</span>
             <button type="button" onClick={()=>Page<totalPages && setPage(Page+1)}
              disabled={totalPages===Page}>
+                
                 <span class="circle1"></span>
                 <span class="circle2"></span>
                 <span class="circle3"></span>

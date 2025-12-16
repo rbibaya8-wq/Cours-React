@@ -1,10 +1,12 @@
-function ProductCard({ product, onAdd}) {
+function ProductCard({ product, onAdd,OnFavoris}) {
   return (
     <div className="card">
       <img src={product.image} className="product-img" alt={product.title} />
       <h3 className="card-title">{product.title}</h3>
       <p className="card-desc">{product.description}</p>
       <p className="price">${product.price}</p>
+
+      <button type="button" className="Favoris" onClick={()=>OnFavoris(product)}>❤️</button>
 
       <div className="buttons-card">
           <button onClick={() => onAdd(product)}>
